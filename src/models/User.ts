@@ -15,6 +15,9 @@ class User {
     @Column() // sem passar nada já é varchar
     password: string;
 
+    @Column() // sem passar nada já é varchar
+    avatar: string;
+
     @CreateDateColumn()
     created_at: Date;
 

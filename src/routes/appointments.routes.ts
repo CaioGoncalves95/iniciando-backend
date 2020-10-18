@@ -14,7 +14,7 @@ appointmentsRouter.use(ensureAuthenticated); // usa o middleware em todas as rot
 appointmentsRouter.get('/', async (request, response) => {
 
     console.log(request.user);
-    
+
     const appointmentsRepository = getCustomRepository(AppointmentsRepository);
     const appointments = await appointmentsRepository.find();
 
@@ -22,23 +22,21 @@ appointmentsRouter.get('/', async (request, response) => {
 });
 
 appointmentsRouter.post('/', async (request, response) => {
-    try {
-        const { provider_id, date } = request.body;
 
-        const parsedDate = parseISO(date);
+    const { provider_id, date } = request.body;
 
-        const createAppointment = new CreateAppointmentService();
+    const parsedDate = parseISO(date);
 
-        const appointment = await createAppointment.execute({
-            date: parsedDate,
-            provider_id,
-        });
+    const createAppointment = new CreateAppointmentService();
 
-        return response.json(appointment);
+    const appointment = await createAppointment.execute({
+        date: parsedDate,
+        provider_id,
+    });
 
-    } catch(err) {
-        return response.status(400).json({ error: err.message});
-    }
+    return response.json(appointment);
+
+
 });
 
 
